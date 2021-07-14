@@ -1029,7 +1029,7 @@ function virtualbox() {
     if [ -z "$KERNELS" ]; then
         pacman_install "virtualbox-guest-utils"
     else
-        pacman_install "virtualbox-guest-utils virtualbox-guest-dkms"
+        pacman_install "virtualbox-guest-utils"
     fi
 }
 
