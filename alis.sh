@@ -1585,8 +1585,9 @@ function desktop_environment_i3_wm() {
 }
 
 function desktop_environment_i3_gaps() {
-    pacman_install "i3-gaps i3blocks i3lock i3status dmenu rxvt-unicode lightdm lightdm-gtk-greeter xorg-server"
-    arch-chroot /mnt systemctl enable lightdm.service
+    pacman_install "i3-gaps i3blocks i3lock i3status dmenu rxvt-unicode xorg-server xorg-xinit"
+    arch-chroot /mnt head -n -5 /etc/X11/xinit/xinitrc >> /home/$USER_NAME/.xinitrc
+    arch-chroot /mnt echo 'exec i3' >> /home/$USER_NAME/.xinitrc
 }
 
 function desktop_environment_deepin() {
