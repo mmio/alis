@@ -1584,11 +1584,15 @@ function desktop_environment_i3_wm() {
     arch-chroot /mnt systemctl enable lightdm.service
 }
 
+# It works when first the lightdm is installed and then xinitrc used, installing directly with xinitrc does not
 function desktop_environment_i3_gaps() {
-    pacman_install "i3-gaps i3blocks i3lock i3status dmenu rxvt-unicode xorg-server lightdm lightdm-gtk-greeter"
-    arch-chroot /mnt systemctl enable lightdm.service
-    # arch-chroot /mnt sh -c "head -n -5 /etc/X11/xinit/xinitrc >> /home/$USER_NAME/.xinitrc"
-    # arch-chroot /mnt sh -c "echo 'exec i3' >> /home/$USER_NAME/.xinitrc"
+    pacman_install "i3-gaps i3blocks i3lock i3status dmenu rxvt-unicode xorg-server lightdm lightdm-gtk-greeter xorg-xinit"
+    # arch-chroot /mnt systemctl enable lightdm.service
+
+    arch-chroot /mnt sh -c "head -n -5 /etc/X11/xinit/xinitrc > /home/$USER_NAME/.xinitrc"
+    arch-chroot /mnt sh -c "echo 'exec i3' >> /home/$USER_NAME/.xinitrc"
+    arch-chroot /mnt chown $USER_NAME:$USER_NAME /home/$USER_NAME/.xinitrc
+    arch-chroot /mnt chmod 755 /home/$USER_NAME/.xinitrc
 }
 
 function desktop_environment_deepin() {
