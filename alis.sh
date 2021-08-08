@@ -1596,7 +1596,8 @@ function desktop_environment_i3_gaps() {
 }
 
 function desktop_environment_deepin() {
-    pacman_install "deepin deepin-extra"
+    pacman_install "deepin deepin-extra deepin-kwin xorg xorg-server"
+    arch-chroot /mnt sed -i 's/^#greeter-session=.*/greeter-session=lightdm-deepin-greeter/' /etc/lightdm/lightdm.conf
     arch-chroot /mnt systemctl enable lightdm.service
 }
 
